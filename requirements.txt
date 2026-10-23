@@ -1,6 +1,8 @@
+
 Flask>=3.0
+gunicorn
 scikit-fuzzy>=0.5.0
 numpy
 scipy
 networkx
-gunicorn
+packaging
