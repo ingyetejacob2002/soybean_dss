@@ -1,0 +1,5 @@
+{% extends "base.html" %}{% block title %}Disease library{% endblock %}{% block body %}
+<section><div class="wrap"><h1>Disease library</h1><p class="noprint"><a class="tag" href="/library">All</a>{% for g in groups %}<a class="tag" href="/library?part={{ g }}">{{ g }}</a>{% endfor %}</p>
+<div class="grid">{% for r in rows %}<a class="card" href="/library/{{ r.Disease_ID }}" style="text-decoration:none;color:inherit">
+{% if r.Image %}<img src="/static/img/{{ r.Image }}.jpg" alt="{{ r.Disease_Name }}" loading="lazy">{% else %}<div class="ph">No photo available</div>{% endif %}
+<div class="b"><h3>{{ r.Disease_Name }}</h3><span class="tag">{{ r.Plant_Part }}</span><span class="tag">{{ r.Cause }}</span></div></a>{% endfor %}</div></div></section>{% endblock %}

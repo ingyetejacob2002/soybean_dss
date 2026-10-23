@@ -1,0 +1,19 @@
+{% extends "base.html" %}{% block title %}Diagnose{% endblock %}{% block body %}
+<section><div class="wrap"><h1>Diagnose a soybean plant</h1>
+<p class="mut" style="max-width:62ch">Look at several plants, then slide each symptom to the level you see. Leave it at 0 when you do not see it. The bars show how much your rating belongs to Low, Moderate and High.</p>
+<form method="post" action="/diagnose">
+{% for g in groups %}<div class="group"><h2 style="margin-top:16px">{{ g }}</h2>
+{% for k,label,hint,grp in symptoms if grp==g %}<div class="sym"><div class="top"><div><b>{{ label }}</b><br><small>{{ hint }}</small></div><span class="val" data-for="{{ k }}">None</span></div>
+<input type="range" min="0" max="10" value="0" name="{{ k }}" id="{{ k }}" aria-label="{{ label }} severity">
+<div class="mf" data-mf="{{ k }}"><div>Low<i><s></s></i></div><div>Moderate<i><s></s></i></div><div>High<i><s></s></i></div></div></div>{% endfor %}</div>{% endfor %}
+<div class="group"><h2 style="margin-top:16px">Spread of the problem</h2><div class="sym"><div class="top"><div><b>Disease progression</b><br><small>How fast it is spreading across plants or the field</small></div><span class="val" data-for="progression">None</span></div>
+<input type="range" min="0" max="10" value="0" name="progression" id="progression" aria-label="Disease progression">
+<div class="mf" data-mf="progression"><div>Low<i><s></s></i></div><div>Moderate<i><s></s></i></div><div>High<i><s></s></i></div></div></div></div>
+<button class="btn" type="submit">Get diagnosis</button></form></div></section>
+<script>
+const MF={Low:[0,0,.4],Moderate:[.3,.5,.7],High:[.6,1,1]};
+const tri=(x,[a,b,c])=>Math.max(Math.min(b==a?(x<=b?1:0):(x-a)/(b-a),c==b?(x>=b?1:0):(c-x)/(c-b)),0);
+document.querySelectorAll('input[type=range]').forEach(r=>{const f=()=>{const x=r.value/10,w=document.querySelector(`[data-mf="${r.id}"]`);
+Object.keys(MF).forEach((k,i)=>w.children[i].querySelector('s').style.width=(tri(x,MF[k])*100)+'%');
+document.querySelector(`[data-for="${r.id}"]`).textContent=x<.05?'None':x<.35?'Low':x<.65?'Moderate':'High';};r.addEventListener('input',f);f();});
+</script>{% endblock %}

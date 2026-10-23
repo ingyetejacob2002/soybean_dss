@@ -1,0 +1,11 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{% block title %}SoyDoc{% endblock %} | Soybean Disease Decision Support</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"></head><body>
+<nav><div class="wrap"><b>SoyDoc</b>
+{% set ep = request.endpoint %}
+<a href="/" class="{{ 'on' if ep=='home' }}">Home</a><a href="/diagnose" class="{{ 'on' if ep=='diagnose' }}">Diagnose</a>
+<a href="/library" class="{{ 'on' if ep in ('library','disease') }}">Disease library</a><a href="/how-it-works" class="{{ 'on' if ep=='about' }}">How it works</a></div></nav>
+{% block body %}{% endblock %}
+<footer><div class="wrap">SoyDoc is decision support, not a replacement for a plant pathologist or extension officer. Always follow product labels and local regulations.</div></footer>
+</body></html>

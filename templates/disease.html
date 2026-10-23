@@ -1,0 +1,7 @@
+{% extends "base.html" %}{% block title %}{{ d.Disease_Name }}{% endblock %}{% block body %}
+<section><div class="wrap"><p><a href="/library">Back to library</a></p><h1>{{ d.Disease_Name }}</h1>
+<div class="result"><div class="card">{% if d.Image %}<img src="/static/img/{{ d.Image }}.jpg" alt="{{ d.Disease_Name }}" style="height:auto;max-height:420px">{% else %}<div class="ph">No photo available</div>{% endif %}</div>
+<div><span class="tag">{{ d.Plant_Part }}</span><span class="tag">{{ d.Cause }}</span><p>{{ d.Description }}</p>
+<h3>Characteristic symptoms</h3><ul class="clean">{% for n,l in syms %}<li>{{ n }}: typically {{ l|lower }}</li>{% endfor %}</ul>
+<h3>Treatment options</h3><ul class="clean">{% for t in treat %}<li>{{ t }}</li>{% endfor %}</ul>
+<h3>Field management</h3><ul class="clean">{% for m in manage %}<li>{{ m }}</li>{% endfor %}</ul></div></div></div></section>{% endblock %}

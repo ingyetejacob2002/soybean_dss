@@ -1,0 +1,18 @@
+{% extends "base.html" %}{% block title %}Result{% endblock %}{% block body %}
+<section><div class="wrap">
+{% if insufficient %}<h1>Not enough evidence yet</h1><p style="max-width:60ch">The observed symptoms do not match any disease strongly enough. Rate more symptoms across leaves, stem, pods, seeds and roots, then try again.</p><a class="btn" href="/diagnose">Back to diagnosis</a>
+{% else %}<h1>Most likely: {{ d.Disease_Name }}</h1>
+<div class="result"><div class="card">{% if d.Image %}<img src="/static/img/{{ d.Image }}.jpg" alt="{{ d.Disease_Name }} on soybean">{% else %}<div class="ph">No field photo available. See description.</div>{% endif %}
+<div class="b"><span class="tag">{{ d.Plant_Part }}</span><span class="tag">{{ d.Cause }}</span><p>{{ d.Description }}</p></div></div>
+<div><div style="display:flex;gap:20px;align-items:center;flex-wrap:wrap"><div class="ring" style="--p:{{ score }}"><span>{{ score|round|int }}</span></div>
+<div><b>Match score (0 to 100)</b><br><span class="urg {{ urgency }}">{{ urgency }}</span><br><small class="mut">Urgency from fuzzy rules on score and progression</small></div></div>
+<h2 style="margin-top:28px">Treatment options</h2><ul class="clean">{% for t in treat %}<li>{{ t }}</li>{% endfor %}</ul>
+<h2>Field management</h2><ul class="clean">{% for m in manage %}<li>{{ m }}</li>{% endfor %}</ul>
+<p class="note">Treatment guidance is decision support. Confirm with an agricultural extension officer before applying chemicals.</p></div></div>
+<h2 style="margin-top:36px">Why this result</h2>
+<table><tr><th>Key symptom</th><th>Expected</th><th>You rated</th><th>Fit</th></tr>
+{% for n,lvl,deg,v in why %}<tr><td>{{ n }}</td><td>{{ lvl }}</td><td>{{ level(v) }}</td><td style="width:35%"><div class="bar"><s style="width:{{ (deg*100)|round }}%"></s></div></td></tr>{% endfor %}</table>
+<h2 style="margin-top:30px">Other possibilities</h2>
+<table>{% for did,name,sc in ranked %}<tr><td><a href="/library/{{ did }}">{{ name }}</a></td><td style="width:50%"><div class="bar"><s style="width:{{ sc }}%"></s></div></td><td>{{ sc }}</td></tr>{% endfor %}</table>
+<p class="noprint" style="margin-top:24px"><a class="btn" href="/diagnose">New diagnosis</a> <button class="btn ghost" onclick="print()">Print or save as PDF</button></p>{% endif %}
+</div></section>{% endblock %}

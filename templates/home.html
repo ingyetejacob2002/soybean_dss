@@ -1,0 +1,9 @@
+{% extends "base.html" %}{% block body %}
+<div class="hero"><div class="wrap"><h1>Tell us what you see on the soybean plant. We will tell you what it likely is.</h1>
+<p>Rate each symptom from none to severe. A fuzzy logic engine compares your observations with {{ n }} soybean diseases and suggests treatment and management steps.</p>
+<a class="btn" href="/diagnose">Start diagnosis</a> <a class="btn ghost" href="/library">Browse diseases</a></div></div>
+<section><div class="wrap grid">
+<div class="card"><div class="b"><h3>Rate, don't guess yes or no</h3><p>Symptoms are rarely all or nothing. Each slider records how strong a symptom is, and the engine handles the overlap between diseases.</p></div></div>
+<div class="card"><div class="b"><h3>{{ nsym }} symptoms, {{ n }} diseases</h3><p>Leaf, stem, pod, seed and root symptoms drawn from soybean pathology literature.</p></div></div>
+<div class="card"><div class="b"><h3>Treatment with urgency</h3><p>Each result includes treatment options, field management and a second fuzzy rating: monitor, act soon or act now.</p></div></div>
+</div></section>{% endblock %}
